@@ -32,20 +32,19 @@ def crises_dia(param):
     
     st.pyplot(fig)
     
-def load_data():
-    #df = pd.read_html(DATA_URL, header=1)
-    df = pd.read_html(DATA_URL, header=1, flavor='html5lib')
-    df = df[0]
-    df.drop(columns='1', inplace=True)
-    df.columns = ['timestamp', 'hora_reportada', 'hora_final', 'evento_onde','evento', 
+def load_data():    
+    df = pd.read_html(DATA_URL, flavor='html5lib')    
+    df = df[0]    
+    df = df[1:]
+    df.columns = ['index','timestamp', 'hora_reportada', 'hora_final', 'evento_onde','evento', 
              'tipo_crise', 'antes_crise',  'durante_crise',
              'comidas',
              'remedios',
              'valor_cetose',
              'email',
-             'depois_crise'             
+             'depois_crise'               
              ]            
-    df = df[1:]        
+    df = df[1:]    
     df['hora_final'] = np.where(df['hora_reportada'].isna(), df["timestamp"], df["hora_reportada"])
     df.drop('timestamp', axis=1, inplace=True)
     df.drop('hora_reportada', axis=1, inplace=True)
@@ -61,6 +60,8 @@ st.markdown(
     """)
 
 # Raw Data
+#st.write(df)
+
 st.sidebar.header("Configuracoes")
 page = st.sidebar.selectbox(
     'Selecionar Dashboard',
