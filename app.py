@@ -33,7 +33,8 @@ def crises_dia(param):
     st.pyplot(fig)
     
 def load_data():
-    df = pd.read_html(DATA_URL, header=1)
+    #df = pd.read_html(DATA_URL, header=1)
+    df = pd.read_html(DATA_URL, header=1, flavor='html5lib')
     df = df[0]
     df.drop(columns='1', inplace=True)
     df.columns = ['timestamp', 'hora_reportada', 'hora_final', 'evento_onde','evento', 
