@@ -33,9 +33,9 @@ def crises_dia(param):
     st.pyplot(fig)
     
 def load_data():
-    df = pd.read_html(DATA_URL, header=1)[0]
+    df = pd.read_html(DATA_URL, header=1)
+    df = df[0]
     df.drop(columns='1', inplace=True)
-
     df.columns = ['timestamp', 'hora_reportada', 'hora_final', 'evento_onde','evento', 
              'tipo_crise', 'antes_crise',  'durante_crise',
              'comidas',
@@ -43,8 +43,7 @@ def load_data():
              'valor_cetose',
              'email',
              'depois_crise'             
-             ]
-            
+             ]            
     df = df[1:]        
     df['hora_final'] = np.where(df['hora_reportada'].isna(), df["timestamp"], df["hora_reportada"])
     df.drop('timestamp', axis=1, inplace=True)
